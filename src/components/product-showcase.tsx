@@ -167,24 +167,13 @@ export default function ProductShowcase({ onAddToCart }: ProductShowcaseProps) {
                       className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                     />
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b1710] via-transparent to-transparent opacity-60" />
-
-                    {/* Badge top-left */}
-                    <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-[11px] font-bold text-[#FFC20E] shadow-md flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-[#FFC20E]" />
-                      <span>{product.highlightTag}</span>
-                    </span>
-
-                    {/* Series Number top-right */}
-                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-emerald-950/80 border border-emerald-500/30 font-mono text-[10px] font-bold text-emerald-400">
-                      {product.seriesNumber}
-                    </span>
-
-                    {/* Nutrition pill bottom-left */}
-                    <div className="absolute bottom-3 left-3 flex items-center gap-2 text-[10px] font-mono text-slate-300 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-                      <span>🔥 {product.calories} kcal</span>
-                      <span className="text-emerald-400">⚡ {product.protein}g prot</span>
-                    </div>
+                    {/* Badge top-left - Only show for 'Mais Pedido' */}
+                    {product.highlightTag === "Mais Pedido" && (
+                      <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-[11px] font-bold text-[#FFC20E] shadow-md flex items-center gap-1">
+                        <Star className="w-3 h-3 fill-[#FFC20E]" />
+                        <span>Mais Pedido</span>
+                      </span>
+                    )}
                   </div>
 
                   {/* Text Content */}
