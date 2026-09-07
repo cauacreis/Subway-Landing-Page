@@ -122,11 +122,6 @@ export default function StoreLocator() {
                       <Clock className="w-3.5 h-3.5" />
                       <span>{store.hours}</span>
                     </span>
-                    {store.hasDriveThru && (
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700">
-                        Drive-thru
-                      </span>
-                    )}
                   </div>
                 </div>
               );
