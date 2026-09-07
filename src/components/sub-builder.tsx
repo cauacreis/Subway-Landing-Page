@@ -16,8 +16,6 @@ import {
   RotateCcw,
   Plus,
   Minus,
-  CheckCircle2,
-  UtensilsCrossed,
   Clock,
   Copy,
   ExternalLink,
@@ -438,10 +436,6 @@ export default function SubBuilder({
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-3 shadow-[0_0_20px_rgba(0,140,21,0.25)]">
-            <UtensilsCrossed className="w-3.5 h-3.5 text-[#FFC20E]" />
-            <span>Totem de Autoatendimento Interativo • Experiência Kiosk</span>
-          </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
             Monte no <span className="text-[#FFC20E]">Totem Digital</span> Subway®
           </h2>
