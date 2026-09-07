@@ -28,7 +28,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-[100dvh] pt-32 pb-20 flex items-center justify-center overflow-hidden">
+    <section id="hero" className="relative min-h-[100dvh] pt-32 pb-20 flex items-center justify-center overflow-hidden">
       {/* Background Radial Lights */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-emerald-600/15 rounded-full blur-[140px] pointer-events-none -z-10" />
       <div className="absolute bottom-10 left-10 w-[450px] h-[450px] bg-[#FFC20E]/10 rounded-full blur-[120px] pointer-events-none -z-10" />
