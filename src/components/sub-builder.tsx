@@ -870,11 +870,11 @@ export default function SubBuilder({
                               state === "normal"
                                 ? "bg-emerald-950/70 border-emerald-400 shadow-md ring-1 ring-emerald-500/40"
                                 : state === "extra"
-                                ? "bg-yellow-950/70 border-yellow-400 shadow-md ring-1 ring-yellow-500/40"
+                                ? "bg-amber-950/70 border-[#FFC20E] shadow-md ring-1 ring-yellow-500/40"
                                 : "bg-white/5 border-white/5 text-slate-400 hover:bg-white/10"
                             }`}
                           >
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 min-w-0 flex-1 mr-3">
                               <div className="relative w-14 h-14 rounded-2xl overflow-hidden bg-black/40 border border-white/10 shrink-0">
                                 <Image
                                   src={v.image}
@@ -883,23 +883,23 @@ export default function SubBuilder({
                                   className="object-cover group-hover:scale-110 transition-transform duration-300"
                                 />
                               </div>
-                              <div>
-                                <h4 className="font-bold text-xs sm:text-sm text-white flex items-center gap-1.5">
+                              <div className="min-w-0 flex-1">
+                                <h4 className="font-bold text-xs sm:text-sm text-white flex items-center gap-1.5 truncate">
                                   <span>{v.icon}</span>
-                                  <span>{v.name}</span>
+                                  <span className="truncate">{v.name}</span>
                                 </h4>
-                                <span className="text-[10px] text-slate-400 block mt-0.5">{v.desc}</span>
+                                <span className="text-[10px] text-slate-400 block mt-0.5 truncate">{v.desc}</span>
                               </div>
                             </div>
 
-                            {/* Badge state indicator */}
+                            {/* Standardized Badge state indicator */}
                             <div
-                              className={`px-3 py-1 rounded-full text-xs font-black uppercase transition-all ${
+                              className={`w-24 h-8 shrink-0 flex items-center justify-center rounded-full text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all duration-200 select-none ${
                                 state === "normal"
-                                  ? "bg-emerald-500 text-slate-950"
+                                  ? "bg-emerald-500 text-slate-950 shadow-[0_0_12px_rgba(16,185,129,0.35)]"
                                   : state === "extra"
-                                  ? "bg-[#FFC20E] text-slate-950 shadow-[0_0_10px_rgba(255,194,14,0.4)]"
-                                  : "bg-black/40 text-slate-500 border border-white/10"
+                                  ? "bg-[#FFC20E] text-slate-950 shadow-[0_0_12px_rgba(255,194,14,0.45)]"
+                                  : "bg-black/50 text-slate-400 border border-white/10"
                               }`}
                             >
                               {state === "normal" ? "✓ Normal" : state === "extra" ? "⭐ Extra" : "Sem"}
