@@ -52,10 +52,6 @@ export default function StoryParallax() {
 
             {/* In-image narrative overlay */}
             <div className="absolute bottom-6 left-6 right-6 md:bottom-12 md:left-12 max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-3">
-                <Leaf className="w-3.5 h-3.5 text-[#FFC20E]" />
-                <span>Manifesto Fresh Reinvented</span>
-              </div>
               <h3 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight leading-tight drop-shadow-md">
                 Onde o frescor não é promessa, é a nossa obsessão.
               </h3>
