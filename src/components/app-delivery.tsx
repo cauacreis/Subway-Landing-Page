@@ -76,11 +76,6 @@ export default function AppDelivery() {
 
           {/* Right Column: Copywriting, Benefits, Coupon */}
           <div className="lg:col-span-6 flex flex-col items-start">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-950/90 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-4">
-              <Smartphone className="w-3.5 h-3.5 text-[#FFC20E]" />
-              <span>Experiência Digital Subway</span>
-            </div>
-
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
               O Subway do seu bolso com{" "}
               <span className="text-[#FFC20E]">30% OFF</span> no 1º Pedido.
