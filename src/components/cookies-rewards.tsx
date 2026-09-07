@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Star, Sparkles, Quote, Heart } from "lucide-react";
+import { Star, Quote } from "lucide-react";
 
 export default function CookiesRewards() {
   const testimonials = [
@@ -71,11 +71,6 @@ export default function CookiesRewards() {
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-white text-xs font-bold shadow-lg">
-                <Sparkles className="w-3.5 h-3.5 text-[#FFC20E]" />
-                <span>Assados em Fornada Especial</span>
-              </div>
             </div>
 
             {/* Copy & Flavors */}
@@ -113,10 +108,6 @@ export default function CookiesRewards() {
         {/* Bottom: Social Proof & Rave Reviews */}
         <div>
           <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
-              <span>A Voz de Quem Ama o Frescor</span>
-            </div>
             <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Mais de 2 Milhões de Sanduíches Criados por Mês
             </h3>
