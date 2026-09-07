@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, ShoppingBag, Menu, X, MapPin, Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface NavbarProps {
   cartCount?: number;
@@ -15,6 +14,23 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("subway-lab");
 
+  const [pillStyle, setPillStyle] = useState<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    opacity: number;
+  }>({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
+  });
+
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+
   const navLinks = [
     { id: "signature", name: "Signature Series", href: "#signature" },
     { id: "subway-lab", name: "Subway Lab 🧪", href: "#subway-lab" },
@@ -23,13 +39,50 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
     { id: "locator", name: "Lojas", href: "#locator" },
   ];
 
+  // Update physical pill position whenever activeSection changes
+  useEffect(() => {
+    const updatePill = () => {
+      if (!activeSection) {
+        setPillStyle((prev) => ({ ...prev, opacity: 0 }));
+        return;
+      }
+
+      const currentLink = linkRefs.current[activeSection];
+      const container = navContainerRef.current;
+
+      if (currentLink && container) {
+        const containerRect = container.getBoundingClientRect();
+        const linkRect = currentLink.getBoundingClientRect();
+
+        setPillStyle({
+          left: Math.round(linkRect.left - containerRect.left),
+          top: Math.round(linkRect.top - containerRect.top),
+          width: Math.round(linkRect.width),
+          height: Math.round(linkRect.height),
+          opacity: 1,
+        });
+      }
+    };
+
+    updatePill();
+    // Safety delay for font rendering and hydration
+    const timer = setTimeout(updatePill, 60);
+    window.addEventListener("resize", updatePill);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", updatePill);
+    };
+  }, [activeSection]);
+
+  // Scrollspy to detect active section continuously
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
       const sectionIds = ["signature", "subway-lab", "fresh", "app", "locator"];
 
-      // If scrolled near bottom of page, activate last section
+      // If near page bottom, activate last section
       if (
         window.innerHeight + window.scrollY >=
         document.documentElement.scrollHeight - 100
@@ -38,44 +91,21 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
         return;
       }
 
-      // If near top of page (Hero section), keep active section clean or match Hero
-      if (window.scrollY < 250) {
-        const heroEl = document.getElementById("hero");
-        if (heroEl) {
-          setActiveSection("");
-        } else {
-          // If no hero id, check first section
-          const firstEl = document.getElementById(sectionIds[0]);
-          if (firstEl && firstEl.getBoundingClientRect().top > 300) {
-            setActiveSection("");
-            return;
-          }
-        }
+      // Check if at the top (Hero) before first section
+      if (window.scrollY < 220) {
+        setActiveSection("");
+        return;
       }
 
-      // Detect which section is currently centered/active in viewport
+      // Determine active section: find the latest section whose top is <= 280px from viewport top
       let current = "";
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 250 && rect.bottom > 250) {
-            current = id;
+          if (rect.top <= 280) {
+            current = sectionIds[i];
             break;
-          }
-        }
-      }
-
-      // Fallback to latest section scrolled past
-      if (!current && window.scrollY >= 250) {
-        for (let i = sectionIds.length - 1; i >= 0; i--) {
-          const el = document.getElementById(sectionIds[i]);
-          if (el) {
-            const rect = el.getBoundingClientRect();
-            if (rect.top <= 250) {
-              current = sectionIds[i];
-              break;
-            }
           }
         }
       }
@@ -87,8 +117,8 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
 
     handleScroll();
 
-    // Check initial hash
-    if (window.location.hash) {
+    // Check hash on load
+    if (typeof window !== "undefined" && window.location.hash) {
       const hashId = window.location.hash.replace("#", "");
       if (["signature", "subway-lab", "fresh", "app", "locator"].includes(hashId)) {
         setActiveSection(hashId);
@@ -125,34 +155,41 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
             </div>
           </Link>
 
-          {/* Desktop Nav Links with Shared Layout Sliding Pill */}
-          <div className="hidden lg:flex items-center gap-1 xl:gap-2">
+          {/* Desktop Nav Links with Real Smooth Sliding Pill */}
+          <div
+            ref={navContainerRef}
+            className="relative hidden lg:flex items-center gap-1 xl:gap-2"
+          >
+            {/* The single moving pill element that physically slides and stretches across the bar */}
+            <div
+              className="absolute top-0 left-0 pointer-events-none rounded-full bg-yellow-400/10 border border-yellow-500/40 shadow-[0_0_20px_rgba(255,194,14,0.25)] z-0"
+              style={{
+                transform: `translate3d(${pillStyle.left}px, ${pillStyle.top}px, 0)`,
+                width: `${pillStyle.width}px`,
+                height: `${pillStyle.height}px`,
+                opacity: pillStyle.opacity,
+                transition:
+                  "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease",
+              }}
+            />
+
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <Link
                   key={link.id}
+                  ref={(el) => {
+                    linkRefs.current[link.id] = el;
+                  }}
                   href={link.href}
                   onClick={() => setActiveSection(link.id)}
-                  className={`relative text-sm font-medium px-4 py-2 rounded-full transition-colors duration-200 ${
+                  className={`relative z-10 text-sm font-medium px-4 py-2 rounded-full transition-colors duration-300 select-none ${
                     isActive
                       ? "text-[#FFC20E] font-semibold"
                       : "text-slate-300 hover:text-white"
                   }`}
                 >
-                  {isActive && (
-                    <motion.span
-                      layoutId="navbar-active-pill"
-                      className="absolute inset-0 rounded-full bg-yellow-400/10 border border-yellow-500/35 shadow-[0_0_20px_rgba(255,194,14,0.2)]"
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 30,
-                        mass: 0.8,
-                      }}
-                    />
-                  )}
-                  <span className="relative z-10">{link.name}</span>
+                  {link.name}
                 </Link>
               );
             })}
