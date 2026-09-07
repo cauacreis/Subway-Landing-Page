@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Cookie, Star, Sparkles, Quote, Heart } from "lucide-react";
+import { Star, Sparkles, Quote, Heart } from "lucide-react";
 
 export default function CookiesRewards() {
   const testimonials = [
@@ -80,11 +80,6 @@ export default function CookiesRewards() {
 
             {/* Copy & Flavors */}
             <div className="lg:col-span-6 flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-500/20 text-[#FFC20E] text-xs font-semibold uppercase tracking-widest mb-4">
-                <Cookie className="w-3.5 h-3.5" />
-                <span>The Sweet Finale</span>
-              </div>
-
               <h3 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-4">
                 O Grand Finale: Cookies Que Aquecem a Alma.
               </h3>
