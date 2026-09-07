@@ -371,12 +371,13 @@ export default function SubBuilder({
 
   // Calculations
   const sizeMultiplier = size === "30cm" ? 1.8 : 1;
+  const calMultiplier = size === "30cm" ? 2 : 1;
   const activeVeggiesCount = Object.values(selectedVeggies).filter((v) => v !== "none").length;
 
-  const basePrice = selectedProtein.price;
-  const breadPrice = selectedBread.price;
+  const basePrice = selectedProtein.price * sizeMultiplier;
+  const breadPrice = selectedBread.price * sizeMultiplier;
   const comboPrice = selectedCombo.price;
-  const totalPrice = (basePrice + breadPrice) * sizeMultiplier + comboPrice;
+  const totalPrice = basePrice + breadPrice + comboPrice;
 
   const totalCalories = Math.round(
     (selectedBread.cal +
@@ -384,7 +385,7 @@ export default function SubBuilder({
       selectedCheese.cal +
       activeVeggiesCount * 12 +
       selectedSauces.length * 50) *
-      sizeMultiplier +
+      calMultiplier +
       selectedCombo.cal
   );
 
@@ -538,7 +539,7 @@ export default function SubBuilder({
                   <span className="text-emerald-400 font-bold">{totalCalories} kcal</span>
                 </div>
                 <div className="mt-2 text-xs text-slate-300">
-                  <span className="text-white font-bold">{size}</span> • {selectedProtein.name} no pão{" "}
+                  <span className="text-white font-bold">{size === "30cm" ? "30 cm Footlong (2x)" : "15 cm Individual"}</span> • {selectedProtein.name} no pão{" "}
                   {selectedBread.name}
                 </div>
                 <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
@@ -570,23 +571,29 @@ export default function SubBuilder({
                       <div className="flex items-center p-1 bg-black/60 rounded-full border border-white/10 self-start sm:self-auto">
                         <button
                           onClick={() => setSize("15cm")}
-                          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             size === "15cm"
-                              ? "bg-[#008C15] text-white shadow-md"
+                              ? "bg-[#008C15] text-white shadow-md ring-1 ring-emerald-400/50"
                               : "text-slate-400 hover:text-white"
                           }`}
                         >
-                          15 cm Individual
+                          <span>15 cm Individual</span>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${size === "15cm" ? "bg-white/20 text-white" : "bg-white/5 text-slate-400"}`}>
+                            1x
+                          </span>
                         </button>
                         <button
                           onClick={() => setSize("30cm")}
-                          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             size === "30cm"
-                              ? "bg-[#008C15] text-white shadow-md"
+                              ? "bg-[#008C15] text-white shadow-md ring-1 ring-emerald-400/50"
                               : "text-slate-400 hover:text-white"
                           }`}
                         >
-                          30 cm Footlong (2x)
+                          <span>30 cm Footlong</span>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${size === "30cm" ? "bg-[#FFC20E] text-slate-950 font-black" : "bg-white/5 text-[#FFC20E]"}`}>
+                            2x
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -624,9 +631,13 @@ export default function SubBuilder({
                               </div>
                             </div>
                             <div className="flex items-center justify-between text-xs mt-4 pt-3 border-t border-white/10">
-                              <span className="text-slate-400 font-mono">{bread.cal} kcal</span>
+                              <span className="text-slate-400 font-mono">
+                                {bread.cal * calMultiplier} kcal
+                              </span>
                               <span className="text-emerald-400 font-bold">
-                                {bread.price > 0 ? `+ R$ ${bread.price.toFixed(2)}` : "Incluso"}
+                                {bread.price > 0
+                                  ? `+ R$ ${(bread.price * sizeMultiplier).toFixed(2).replace(".", ",")}`
+                                  : "Incluso"}
                               </span>
                             </div>
                           </div>
@@ -639,13 +650,45 @@ export default function SubBuilder({
                 {/* 2. PROTEIN CATEGORY */}
                 {activeCategory === "protein" && (
                   <div className="space-y-6 animate-in fade-in duration-200">
-                    <div>
-                      <h3 className="text-xl font-extrabold text-white">
-                        2. Selecione o Recheio / Proteína Principal
-                      </h3>
-                      <p className="text-xs text-slate-400 mt-1">
-                        Carnes fatiadas e salteadas na hora para máxima suculência.
-                      </p>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div>
+                        <h3 className="text-xl font-extrabold text-white">
+                          2. Selecione o Recheio / Proteína Principal
+                        </h3>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Carnes fatiadas e salteadas na hora para máxima suculência.
+                        </p>
+                      </div>
+
+                      {/* Size Selector in Step 2 */}
+                      <div className="flex items-center p-1 bg-black/60 rounded-full border border-white/10 self-start sm:self-auto">
+                        <button
+                          onClick={() => setSize("15cm")}
+                          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                            size === "15cm"
+                              ? "bg-[#008C15] text-white shadow-md ring-1 ring-emerald-400/50"
+                              : "text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          <span>15 cm</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${size === "15cm" ? "bg-white/20 text-white" : "bg-white/5 text-slate-400"}`}>
+                            1x
+                          </span>
+                        </button>
+                        <button
+                          onClick={() => setSize("30cm")}
+                          className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                            size === "30cm"
+                              ? "bg-[#008C15] text-white shadow-md ring-1 ring-emerald-400/50"
+                              : "text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          <span>30 cm</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${size === "30cm" ? "bg-[#FFC20E] text-slate-950 font-black" : "bg-white/5 text-[#FFC20E]"}`}>
+                            2x
+                          </span>
+                        </button>
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -682,10 +725,10 @@ export default function SubBuilder({
                             </div>
                             <div className="flex items-center justify-between text-xs mt-4 pt-3 border-t border-white/10">
                               <span className="text-slate-400 font-mono">
-                                {protein.cal} kcal • {protein.protein}g prot
+                                {protein.cal * calMultiplier} kcal • {protein.protein * calMultiplier}g prot
                               </span>
                               <span className="text-[#FFC20E] font-black text-sm">
-                                R$ {protein.price.toFixed(2).replace(".", ",")}
+                                R$ {(protein.price * sizeMultiplier).toFixed(2).replace(".", ",")}
                               </span>
                             </div>
                           </div>
@@ -744,8 +787,12 @@ export default function SubBuilder({
                               </div>
                             </div>
                             <div className="flex items-center justify-between text-xs mt-3 pt-3 border-t border-white/10">
-                              <span className="text-slate-400 font-mono">{cheese.cal} kcal</span>
-                              <span className="text-emerald-400 font-bold">Incluso</span>
+                              <span className="text-slate-400 font-mono">
+                                {cheese.cal * calMultiplier} kcal
+                              </span>
+                              <span className="text-emerald-400 font-bold">
+                                {size === "30cm" ? "Incluso (2x)" : "Incluso"}
+                              </span>
                             </div>
                           </div>
                         );
@@ -909,7 +956,9 @@ export default function SubBuilder({
                               </div>
                             </div>
                             <div className="flex items-center justify-between text-xs mt-3 pt-3 border-t border-white/10">
-                              <span className="text-slate-400 font-mono">{sauce.cal} kcal</span>
+                              <span className="text-slate-400 font-mono">
+                                {sauce.cal * calMultiplier} kcal
+                              </span>
                               <div
                                 className={`w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold transition-all ${
                                   isSelected ? "bg-emerald-500 text-slate-950" : "border border-white/20 text-transparent"
@@ -1032,7 +1081,7 @@ export default function SubBuilder({
                   Bandeja Totem:
                 </span>
                 <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-emerald-300 font-bold">
-                  {size} • {selectedBread.name}
+                  {size === "30cm" ? "30 cm Footlong (2x)" : "15 cm Individual"} • {selectedBread.name}
                 </span>
                 <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-emerald-300 font-bold">
                   {selectedProtein.name}
@@ -1053,9 +1102,14 @@ export default function SubBuilder({
             {/* Total Price and Primary Action */}
             <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
               <div className="text-right">
-                <span className="text-[10px] uppercase font-mono text-slate-400 block">
-                  Total da Comanda
-                </span>
+                <div className="flex items-center justify-end gap-2">
+                  <span className="text-[10px] uppercase font-mono text-slate-400 block">
+                    Total da Comanda
+                  </span>
+                  <span className="text-xs font-mono text-emerald-400 font-bold">
+                    {totalCalories} kcal
+                  </span>
+                </div>
                 <span className="text-2xl font-black text-[#FFC20E]">
                   R$ {totalPrice.toFixed(2).replace(".", ",")}
                 </span>
