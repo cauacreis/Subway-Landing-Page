@@ -455,9 +455,6 @@ export default function SubBuilder({
                   SUBWAY <span className="text-[#FFC20E]">KIOSK™</span>
                 </span>
               </div>
-              <span className="hidden sm:inline-block text-xs font-mono text-slate-400 border-l border-white/20 pl-3">
-                Totem #03 • Autoatendimento 4K
-              </span>
             </div>
 
             {/* Order Mode (Comer Aqui vs Levar) */}
