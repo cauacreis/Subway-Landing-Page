@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #060e09;
+    --foreground: #f8fafc;
+    --subway-green: #008C15;
+    --subway-green-light: #05a827;
+    --subway-green-dark: #004d10;
+    --subway-gold: #FFC20E;
+    --subway-gold-light: #ffd54f;
+    --subway-gold-dark: #b28300;
+    --shell-bg: rgba(255, 255, 255, 0.035);
+    --shell-border: rgba(255, 255, 255, 0.08);
+    --core-bg: #0b1710;
+    --core-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  }
+
+  * {
+    border-color: var(--shell-border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060e09;
+}
+::-webkit-scrollbar-thumb {
+  background: #193623;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #008C15;
+}
+
+/* High-End Double-Bezel Card Utility */
+.double-bezel {
+  background: var(--shell-bg);
+  border: 1px solid var(--shell-border);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.double-bezel-inner {
+  background: var(--core-bg);
+  border-radius: calc(2rem - 0.5rem);
+  box-shadow: var(--core-highlight);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* Subway Glow Radiance */
+.emerald-glow {
+  background: radial-gradient(circle at center, rgba(0, 140, 21, 0.15) 0%, rgba(6, 14, 9, 0) 70%);
+}
+
+.gold-glow {
+  background: radial-gradient(circle at center, rgba(255, 194, 14, 0.12) 0%, rgba(6, 14, 9, 0) 70%);
+}
+
+/* Grain texture overlay */
+.grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* Marquee infinite scroll */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Subtle Floating animation for zero gravity elements */
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(1.5deg); }
+}
+
+.animate-float-slow {
+  animation: subtle-float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: subtle-float 8s ease-in-out infinite reverse;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
