@@ -1072,57 +1072,31 @@ export default function SubBuilder({
             </div>
           </div>
 
-          {/* KIOSK BOTTOM ORDER DOCK (BARRA INFERIOR DE BANDEJA DO TOTEM) */}
-          <div className="p-4 sm:p-6 bg-black/80 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 backdrop-blur-md">
-            {/* Selected items miniature tray */}
-            <div className="flex items-center gap-3 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-[10px] uppercase font-mono text-slate-400 font-bold block">
-                  Bandeja Totem:
-                </span>
-                <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-emerald-300 font-bold">
-                  {size === "30cm" ? "30 cm Footlong (2x)" : "15 cm Individual"} • {selectedBread.name}
-                </span>
-                <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-emerald-300 font-bold">
-                  {selectedProtein.name}
-                </span>
-                {selectedCheese.id !== "no-cheese" && (
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-yellow-300 font-bold">
-                    {selectedCheese.name}
-                  </span>
-                )}
-                {selectedCombo.id !== "no-combo" && (
-                  <span className="text-xs px-2.5 py-1 rounded-full bg-white/10 text-[#FFC20E] font-bold">
-                    {selectedCombo.name}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Total Price and Primary Action */}
-            <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
-              <div className="text-right">
-                <div className="flex items-center justify-end gap-2">
-                  <span className="text-[10px] uppercase font-mono text-slate-400 block">
-                    Total da Comanda
-                  </span>
-                  <span className="text-xs font-mono text-emerald-400 font-bold">
-                    {totalCalories} kcal
-                  </span>
-                </div>
-                <span className="text-2xl font-black text-[#FFC20E]">
+          {/* KIOSK BOTTOM ORDER DOCK */}
+          <div className="p-4 sm:p-6 bg-black/80 border-t border-white/10 flex flex-row items-center justify-between gap-4 backdrop-blur-md">
+            {/* Total da Comanda & Preço em uma única linha, sem quebra */}
+            <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
+              <span className="text-xs sm:text-sm uppercase font-mono text-slate-400 font-bold tracking-wider whitespace-nowrap">
+                Total da Comanda:
+              </span>
+              <div className="flex items-baseline gap-2 whitespace-nowrap">
+                <span className="text-2xl sm:text-3xl font-black text-[#FFC20E] whitespace-nowrap leading-none tracking-tight">
                   R$ {totalPrice.toFixed(2).replace(".", ",")}
                 </span>
+                <span className="text-xs font-mono text-emerald-400 font-bold whitespace-nowrap bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full hidden sm:inline-block">
+                  {totalCalories} kcal
+                </span>
               </div>
-
-              <button
-                onClick={handleOpenAppModal}
-                className="px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-[#008C15] to-[#046a15] hover:from-[#05a827] text-xs font-black uppercase tracking-wider text-white shadow-[0_0_25px_rgba(0,140,21,0.4)] transition-all cursor-pointer active:scale-95 flex items-center gap-2"
-              >
-                <Smartphone className="w-4 h-4 text-yellow-300" />
-                <span>Terminar Pedido no App</span>
-              </button>
             </div>
+
+            {/* Primary Action Button */}
+            <button
+              onClick={handleOpenAppModal}
+              className="px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-[#008C15] to-[#046a15] hover:from-[#05a827] text-xs font-black uppercase tracking-wider text-white shadow-[0_0_25px_rgba(0,140,21,0.4)] transition-all cursor-pointer active:scale-95 flex items-center gap-2 whitespace-nowrap shrink-0"
+            >
+              <Smartphone className="w-4 h-4 text-yellow-300" />
+              <span>Terminar Pedido no App</span>
+            </button>
           </div>
         </div>
       </div>
