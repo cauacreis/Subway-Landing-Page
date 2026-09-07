@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Navigation, Clock, Phone, Search, ChevronRight, Check } from "lucide-react";
+import { Navigation, Clock, Phone, Search, ChevronRight, Check } from "lucide-react";
 
 interface Store {
   id: string;
@@ -70,10 +70,6 @@ export default function StoreLocator() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-widest mb-3">
-              <MapPin className="w-3.5 h-3.5 text-[#FFC20E]" />
-              <span>Rede Nacional de Restaurantes</span>
-            </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
               Sempre um <span className="text-[#008C15]">Subway</span> Perto de Você
             </h2>
