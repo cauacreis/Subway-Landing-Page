@@ -98,9 +98,6 @@ export default function CookiesRewards() {
                       <span className="font-bold text-sm text-white block">{cookie.name}</span>
                       <span className="text-xs text-slate-400">{cookie.desc}</span>
                     </div>
-                    <span className="text-[10px] px-2.5 py-1 rounded-full bg-yellow-400/10 text-[#FFC20E] border border-yellow-400/20 font-semibold shrink-0">
-                      {cookie.badge}
-                    </span>
                   </div>
                 ))}
               </div>
