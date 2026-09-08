@@ -404,12 +404,12 @@ export default function SubBuilder({
   );
 
   const categories = [
-    { id: "bread", label: "1. Pão & Tamanho", icon: "🥖", activeDesc: `${size} • ${selectedBread.name}` },
-    { id: "protein", label: "2. Recheio", icon: "🥩", activeDesc: selectedProtein.name },
-    { id: "cheese", label: "3. Queijo & Forno", icon: "🧀", activeDesc: `${selectedCheese.name} (${toasting})` },
-    { id: "veggies", label: "4. Saladas", icon: "🥗", activeDesc: `${activeVeggiesCount} selecionados` },
-    { id: "sauce", label: "5. Molhos", icon: "💧", activeDesc: `${selectedSauces.length} selecionados` },
-    { id: "combo", label: "6. Turbine seu Combo", icon: "🥤", activeDesc: selectedCombo.name },
+    { id: "bread", label: "1. Pão & Tamanho", icon: "/images/kiosk/steps-3d/step_bread_3d.png", activeDesc: `${size} • ${selectedBread.name}` },
+    { id: "protein", label: "2. Recheio", icon: "/images/kiosk/steps-3d/step_protein_3d.png", activeDesc: selectedProtein.name },
+    { id: "cheese", label: "3. Queijo & Forno", icon: "/images/kiosk/steps-3d/step_cheese_3d.png", activeDesc: `${selectedCheese.name} (${toasting})` },
+    { id: "veggies", label: "4. Saladas", icon: "/images/kiosk/steps-3d/step_salad_3d.png", activeDesc: `${activeVeggiesCount} selecionados` },
+    { id: "sauce", label: "5. Molhos", icon: "/images/kiosk/steps-3d/step_sauce_3d.png", activeDesc: `${selectedSauces.length} selecionados` },
+    { id: "combo", label: "6. Turbine seu Combo", icon: "/images/kiosk/steps-3d/step_combo_3d.png", activeDesc: selectedCombo.name },
   ];
 
   const handleOpenAppModal = () => {
@@ -525,9 +525,15 @@ export default function SubBuilder({
                           : "bg-white/5 border-white/5 text-slate-400 hover:bg-white/10 hover:text-slate-200"
                       }`}
                     >
-                      <span className="text-2xl p-2 rounded-xl bg-black/40 border border-white/10">
-                        {cat.icon}
-                      </span>
+                      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-black/60 border border-white/10 flex items-center justify-center p-1.5 shrink-0 relative overflow-hidden group-hover:border-emerald-500/40 transition-colors shadow-inner">
+                        <Image
+                          src={cat.icon}
+                          alt={cat.label}
+                          width={44}
+                          height={44}
+                          className="w-full h-full object-contain filter drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)] transition-transform duration-300 group-hover:scale-115"
+                        />
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-bold uppercase tracking-wider text-white group-hover:text-emerald-300 transition-colors">
                           {cat.label}
@@ -578,8 +584,10 @@ export default function SubBuilder({
                 <div className="space-y-1.5 text-xs max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
                   {/* Pão & Tamanho */}
                   <div className="flex items-center justify-between gap-2 text-slate-300">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <span className="shrink-0 text-[11px]">🥖</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-4 h-4 relative shrink-0">
+                        <Image src="/images/kiosk/steps-3d/step_bread_3d.png" alt="Pão" fill className="object-contain" />
+                      </div>
                       <span className="truncate text-white font-medium">
                         {size === "30cm" ? "30cm Footlong" : "15cm"} • {selectedBread.name}
                       </span>
@@ -591,8 +599,10 @@ export default function SubBuilder({
 
                   {/* Recheio / Proteína */}
                   <div className="flex items-center justify-between gap-2 text-slate-300">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <span className="shrink-0 text-[11px]">🥩</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-4 h-4 relative shrink-0">
+                        <Image src="/images/kiosk/steps-3d/step_protein_3d.png" alt="Proteína" fill className="object-contain" />
+                      </div>
                       <span className="truncate text-white font-medium">
                         {selectedProtein.name}
                       </span>
@@ -604,8 +614,10 @@ export default function SubBuilder({
 
                   {/* Queijo & Ponto */}
                   <div className="flex items-center justify-between gap-2 text-slate-300">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <span className="shrink-0 text-[11px]">🧀</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-4 h-4 relative shrink-0">
+                        <Image src="/images/kiosk/steps-3d/step_cheese_3d.png" alt="Queijo" fill className="object-contain" />
+                      </div>
                       <span className="truncate text-slate-300">
                         {selectedCheese.name} ({toasting === "tostado" ? "Tostado" : toasting === "extra" ? "Extra Tostado" : "Frio"})
                       </span>
@@ -618,8 +630,10 @@ export default function SubBuilder({
                   {/* Vegetais / Saladas */}
                   {activeVeggiesList.length > 0 && (
                     <div className="flex items-start justify-between gap-2 text-slate-300">
-                      <div className="flex items-start gap-1.5 min-w-0">
-                        <span className="shrink-0 text-[11px] mt-0.5">🥗</span>
+                      <div className="flex items-start gap-2 min-w-0">
+                        <div className="w-4 h-4 relative shrink-0 mt-0.5">
+                          <Image src="/images/kiosk/steps-3d/step_salad_3d.png" alt="Saladas" fill className="object-contain" />
+                        </div>
                         <div className="text-[11px] text-slate-300 leading-tight">
                           {activeVeggiesList.map((v, i) => (
                             <span key={v.id}>
@@ -639,8 +653,10 @@ export default function SubBuilder({
                   {/* Molhos */}
                   {activeSaucesList.length > 0 && (
                     <div className="flex items-start justify-between gap-2 text-slate-300">
-                      <div className="flex items-start gap-1.5 min-w-0">
-                        <span className="shrink-0 text-[11px] mt-0.5">💧</span>
+                      <div className="flex items-start gap-2 min-w-0">
+                        <div className="w-4 h-4 relative shrink-0 mt-0.5">
+                          <Image src="/images/kiosk/steps-3d/step_sauce_3d.png" alt="Molhos" fill className="object-contain" />
+                        </div>
                         <div className="text-[11px] text-slate-300 leading-tight">
                           {activeSaucesList.map((s, i) => (
                             <span key={s.id}>
@@ -659,8 +675,10 @@ export default function SubBuilder({
                   {/* Combo */}
                   {selectedCombo.id !== "no-combo" && (
                     <div className="flex items-center justify-between gap-2 text-slate-300">
-                      <div className="flex items-center gap-1.5 min-w-0">
-                        <span className="shrink-0 text-[11px]">🥤</span>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <div className="w-4 h-4 relative shrink-0">
+                          <Image src="/images/kiosk/steps-3d/step_combo_3d.png" alt="Combo" fill className="object-contain" />
+                        </div>
                         <span className="truncate text-white font-medium">
                           {selectedCombo.name}
                         </span>
