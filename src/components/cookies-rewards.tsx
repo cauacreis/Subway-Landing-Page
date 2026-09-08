@@ -53,7 +53,7 @@ export default function CookiesRewards() {
   ];
 
   return (
-    <section className="py-28 relative bg-[#060e09] overflow-hidden">
+    <section id="cookies" className="py-28 relative bg-[#060e09] overflow-hidden">
       {/* Background glow */}
       <div className="absolute top-1/3 left-10 w-[500px] h-[500px] bg-[#FFC20E]/10 rounded-full blur-[160px] pointer-events-none -z-10" />
 

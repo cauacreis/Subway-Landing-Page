@@ -332,7 +332,18 @@ export default function SubBuilder({
     };
     updateTime();
     const interval = setInterval(updateTime, 30000);
-    return () => clearInterval(interval);
+
+    const handleSetCategory = (e: CustomEvent<string>) => {
+      if (e.detail && ["bread", "protein", "cheese", "veggies", "sauce", "combo"].includes(e.detail)) {
+        setActiveCategory(e.detail as any);
+      }
+    };
+    window.addEventListener("subway:set-kiosk-category" as any, handleSetCategory);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("subway:set-kiosk-category" as any, handleSetCategory);
+    };
   }, []);
 
   // Veggie cycle handler (None -> Normal -> Extra -> None)
