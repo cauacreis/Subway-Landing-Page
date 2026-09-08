@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Flame, ShieldCheck, Clock, Award } from "lucide-react";
+import { ArrowRight, Flame, ShieldCheck, Clock, Award, ChevronRight } from "lucide-react";
 
 const HERO_ITEMS = [
   {
@@ -45,6 +45,10 @@ export default function Hero() {
     }, 3800);
     return () => clearInterval(interval);
   }, [isHovered]);
+
+  const handleNextItem = () => {
+    setCurrentIndex((prev) => (prev + 1) % HERO_ITEMS.length);
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -146,11 +150,13 @@ export default function Hero() {
               onMouseMove={handleMouseMove}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={handleMouseLeave}
+              onClick={handleNextItem}
               style={{
                 transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
                 transition: "transform 0.15s ease-out",
               }}
-              className="double-bezel w-full max-w-lg lg:max-w-none relative cursor-grab active:cursor-grabbing group select-none"
+              className="double-bezel w-full max-w-lg lg:max-w-none relative cursor-pointer active:scale-[0.99] group select-none transition-transform duration-200"
+              title="Toque na foto para ver o próximo destaque"
             >
               <div className="double-bezel-inner relative overflow-hidden aspect-[4/3] sm:aspect-[16/11]">
                 {/* Rotating Images with Smooth Crossfade */}
@@ -177,6 +183,11 @@ export default function Hero() {
                 {/* Dark Vignette Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
 
+                {/* Floating Next Indicator on Hover */}
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/60 backdrop-blur-md border border-white/20 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-2xl translate-x-2 group-hover:translate-x-0 group-hover:scale-105">
+                  <ChevronRight className="w-5 h-5 text-[#FFC20E]" />
+                </div>
+
                 {/* Clean Name Only & Subtle Pagination */}
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                   <div className="px-3.5 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/10 shadow-lg pointer-events-auto">
@@ -189,7 +200,10 @@ export default function Hero() {
                     {HERO_ITEMS.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => setCurrentIndex(i)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentIndex(i);
+                        }}
                         aria-label={`Ver ${HERO_ITEMS[i].name}`}
                         className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                           i === currentIndex
