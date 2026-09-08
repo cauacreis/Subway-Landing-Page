@@ -1,13 +1,50 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Flame, ShieldCheck, Clock, Award } from "lucide-react";
 
+const HERO_ITEMS = [
+  {
+    name: "The Artisan Supreme Sub",
+    image: "/images/hero.jpg",
+  },
+  {
+    name: "Italian B.M.T.® Masterpiece",
+    image: "/images/bmt.jpg",
+  },
+  {
+    name: "Shaved Steak & Melted Cheddar",
+    image: "/images/steak.jpg",
+  },
+  {
+    name: "Sweet Onion Chicken Teriyaki",
+    image: "/images/teriyaki.jpg",
+  },
+  {
+    name: "Veggie Supreme & Avocado Glaze",
+    image: "/images/veggie.jpg",
+  },
+  {
+    name: "Cookies Artesanais de Chocolate",
+    image: "/images/cookies.jpg",
+  },
+];
+
 export default function Hero() {
   const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % HERO_ITEMS.length);
+    }, 3800);
+    return () => clearInterval(interval);
+  }, [isHovered]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -25,6 +62,7 @@ export default function Hero() {
 
   const handleMouseLeave = () => {
     setRotate({ x: 0, y: 0 });
+    setIsHovered(false);
   };
 
   return (
@@ -106,6 +144,7 @@ export default function Hero() {
             <div
               ref={cardRef}
               onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={handleMouseLeave}
               style={{
                 transform: `perspective(1000px) rotateX(${rotate.x}deg) rotateY(${rotate.y}deg)`,
@@ -114,31 +153,52 @@ export default function Hero() {
               className="double-bezel w-full max-w-lg lg:max-w-none relative cursor-grab active:cursor-grabbing group select-none"
             >
               <div className="double-bezel-inner relative overflow-hidden aspect-[4/3] sm:aspect-[16/11]">
-                <Image
-                  src="/images/hero.jpg"
-                  alt="Subway Signature Series Hero Sandwich"
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                />
+                {/* Rotating Images with Smooth Crossfade */}
+                {HERO_ITEMS.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                      index === currentIndex
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-105 pointer-events-none"
+                    }`}
+                  >
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      priority={index === 0}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center"
+                    />
+                  </div>
+                ))}
 
                 {/* Dark Vignette Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
 
-                {/* Bottom Card Bar */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between p-3.5 rounded-2xl bg-black/65 backdrop-blur-xl border border-white/10">
-                  <div>
-                    <span className="text-xs text-emerald-400 font-mono font-medium block">
-                      Subway Series #01
+                {/* Clean Name Only & Subtle Pagination */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+                  <div className="px-3.5 py-1.5 rounded-full bg-black/65 backdrop-blur-md border border-white/10 shadow-lg pointer-events-auto">
+                    <span className="text-xs sm:text-sm font-bold text-white tracking-wide">
+                      {HERO_ITEMS[currentIndex].name}
                     </span>
-                    <h2 className="text-white font-bold text-sm sm:text-base">
-                      The Artisan Supreme Sub
-                    </h2>
                   </div>
-                  <span className="text-[#FFC20E] font-extrabold text-base sm:text-lg">
-                    R$ 38,90
-                  </span>
+
+                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-white/10 pointer-events-auto">
+                    {HERO_ITEMS.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentIndex(i)}
+                        aria-label={`Ver ${HERO_ITEMS[i].name}`}
+                        className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          i === currentIndex
+                            ? "w-5 bg-[#FFC20E]"
+                            : "w-1.5 bg-white/30 hover:bg-white/60"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
