@@ -381,6 +381,28 @@ export default function SubBuilder({
       selectedCombo.cal
   );
 
+  const totalProtein = Math.round(
+    (selectedBread.protein + selectedProtein.protein + selectedCheese.protein) * calMultiplier +
+      (selectedCombo.id === "combo-full" ? 4 : 0)
+  );
+
+  const totalCarbs = Math.round(
+    45 * calMultiplier +
+      (selectedCombo.id === "combo-full" ? 68 : selectedCombo.id === "combo-cookie" ? 34 : selectedCombo.id === "combo-drink" ? 35 : 0)
+  );
+
+  const totalFat = Math.round(
+    (5 + 12 + (selectedCheese.id !== "no-cheese" ? 7 : 0)) * calMultiplier +
+      (selectedCombo.id === "combo-full" ? 14 : selectedCombo.id === "combo-cookie" ? 12 : 0)
+  );
+
+  const activeVeggiesList = KIOSK_VEGGIES.filter(
+    (v) => selectedVeggies[v.id] && selectedVeggies[v.id] !== "none"
+  );
+  const activeSaucesList = KIOSK_SAUCES.filter((s) =>
+    selectedSauces.includes(s.id)
+  );
+
   const categories = [
     { id: "bread", label: "1. Pão & Tamanho", icon: "🥖", activeDesc: `${size} • ${selectedBread.name}` },
     { id: "protein", label: "2. Recheio", icon: "🥩", activeDesc: selectedProtein.name },
@@ -525,20 +547,129 @@ export default function SubBuilder({
               </div>
 
               {/* Order Live Summary Badge in Left Rail */}
-              <div className="hidden lg:block mt-6 p-4 rounded-2xl bg-black/60 border border-white/10">
-                <div className="flex items-center justify-between text-xs text-slate-400 font-mono">
-                  <span>Métricas da Criação:</span>
-                  <span className="text-emerald-400 font-bold">{totalCalories} kcal</span>
-                </div>
-                <div className="mt-2 text-xs text-slate-300">
-                  <span className="text-white font-bold">{size === "30cm" ? "30 cm Footlong (2x)" : "15 cm Individual"}</span> • {selectedProtein.name} no pão{" "}
-                  {selectedBread.name}
-                </div>
-                <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-xs font-mono text-slate-400">Total Atual</span>
-                  <span className="text-xl font-black text-[#FFC20E]">
-                    R$ {totalPrice.toFixed(2).replace(".", ",")}
+              <div className="hidden lg:block mt-5 p-4 rounded-2xl bg-black/70 border border-white/10 space-y-3 shadow-xl">
+                {/* Header with Title & Total Calories */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <span className="text-[11px] uppercase font-mono text-slate-300 font-bold tracking-wider">
+                    Métricas da Criação
                   </span>
+                  <span className="text-xs font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                    {totalCalories} kcal
+                  </span>
+                </div>
+
+                {/* Macros Dashboard: Proteínas, Carbos e Gorduras */}
+                <div className="grid grid-cols-3 gap-1.5 p-2 rounded-xl bg-white/5 border border-white/5 text-center font-mono">
+                  <div>
+                    <span className="text-[9px] uppercase text-slate-400 block">Proteína</span>
+                    <span className="text-xs font-black text-[#FFC20E]">{totalProtein}g</span>
+                  </div>
+                  <div className="border-x border-white/10">
+                    <span className="text-[9px] uppercase text-slate-400 block">Carbos</span>
+                    <span className="text-xs font-black text-slate-200">{totalCarbs}g</span>
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase text-slate-400 block">Gorduras</span>
+                    <span className="text-xs font-black text-slate-300">{totalFat}g</span>
+                  </div>
+                </div>
+
+                {/* All Selected Ingredients Breakdown */}
+                <div className="space-y-1.5 text-xs max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
+                  {/* Pão & Tamanho */}
+                  <div className="flex items-center justify-between gap-2 text-slate-300">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="shrink-0 text-[11px]">🥖</span>
+                      <span className="truncate text-white font-medium">
+                        {size === "30cm" ? "30cm Footlong" : "15cm"} • {selectedBread.name}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                      {selectedBread.cal * calMultiplier} kcal
+                    </span>
+                  </div>
+
+                  {/* Recheio / Proteína */}
+                  <div className="flex items-center justify-between gap-2 text-slate-300">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="shrink-0 text-[11px]">🥩</span>
+                      <span className="truncate text-white font-medium">
+                        {selectedProtein.name}
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                      {selectedProtein.cal * calMultiplier} kcal
+                    </span>
+                  </div>
+
+                  {/* Queijo & Ponto */}
+                  <div className="flex items-center justify-between gap-2 text-slate-300">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      <span className="shrink-0 text-[11px]">🧀</span>
+                      <span className="truncate text-slate-300">
+                        {selectedCheese.name} ({toasting === "tostado" ? "Tostado" : toasting === "extra" ? "Extra Tostado" : "Frio"})
+                      </span>
+                    </div>
+                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                      {selectedCheese.cal * calMultiplier} kcal
+                    </span>
+                  </div>
+
+                  {/* Vegetais / Saladas */}
+                  {activeVeggiesList.length > 0 && (
+                    <div className="flex items-start justify-between gap-2 text-slate-300">
+                      <div className="flex items-start gap-1.5 min-w-0">
+                        <span className="shrink-0 text-[11px] mt-0.5">🥗</span>
+                        <div className="text-[11px] text-slate-300 leading-tight">
+                          {activeVeggiesList.map((v, i) => (
+                            <span key={v.id}>
+                              {v.name}
+                              {selectedVeggies[v.id] === "extra" ? " (Extra)" : ""}
+                              {i < activeVeggiesList.length - 1 ? ", " : ""}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                        {activeVeggiesList.length * 12 * calMultiplier} kcal
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Molhos */}
+                  {activeSaucesList.length > 0 && (
+                    <div className="flex items-start justify-between gap-2 text-slate-300">
+                      <div className="flex items-start gap-1.5 min-w-0">
+                        <span className="shrink-0 text-[11px] mt-0.5">💧</span>
+                        <div className="text-[11px] text-slate-300 leading-tight">
+                          {activeSaucesList.map((s, i) => (
+                            <span key={s.id}>
+                              {s.name}
+                              {i < activeSaucesList.length - 1 ? ", " : ""}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                        {activeSaucesList.length * 50 * calMultiplier} kcal
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Combo */}
+                  {selectedCombo.id !== "no-combo" && (
+                    <div className="flex items-center justify-between gap-2 text-slate-300">
+                      <div className="flex items-center gap-1.5 min-w-0">
+                        <span className="shrink-0 text-[11px]">🥤</span>
+                        <span className="truncate text-white font-medium">
+                          {selectedCombo.name}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                        +{selectedCombo.cal} kcal
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
