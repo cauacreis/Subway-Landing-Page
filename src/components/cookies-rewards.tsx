@@ -11,7 +11,7 @@ export default function CookiesRewards() {
       comment:
         "O novo pão artesanal com crosta de queijo e os cortes nobres colocaram o Subway em outro patamar gastronômico. O B.M.T. com queijo fundido é espetacular.",
       rating: 5,
-      avatar: "👨‍🍳",
+      avatar: "/images/avatars/avatar-rafael.jpg",
       city: "São Paulo, SP",
     },
     {
@@ -20,7 +20,7 @@ export default function CookiesRewards() {
       comment:
         "A experiência de montar meu sanduíche personalizado com vegetais frescos e o molho de cebola agridoce é incomparável na correria do dia a dia. Chega sempre impecável.",
       rating: 5,
-      avatar: "👩‍💻",
+      avatar: "/images/avatars/avatar-beatriz.jpg",
       city: "Curitiba, PR",
     },
     {
@@ -29,7 +29,7 @@ export default function CookiesRewards() {
       comment:
         "Os cookies quentinhos de chocolate triplo com aquela casquinha e centro derretido são sagrados depois de qualquer Sub. Impossível pedir um só!",
       rating: 5,
-      avatar: "🎨",
+      avatar: "/images/avatars/avatar-lucas.jpg",
       city: "Rio de Janeiro, RJ",
     },
   ];
@@ -132,9 +132,15 @@ export default function CookiesRewards() {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-white/5">
-                    <div className="w-10 h-10 rounded-full bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center text-lg">
-                      {t.avatar}
+                  <div className="flex items-center gap-3.5 pt-4 border-t border-white/5">
+                    <div className="w-11 h-11 rounded-full overflow-hidden border border-emerald-500/40 relative shrink-0 shadow-md shadow-black/40 ring-1 ring-white/10">
+                      <Image
+                        src={t.avatar}
+                        alt={t.name}
+                        fill
+                        sizes="44px"
+                        className="object-cover object-center"
+                      />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-white leading-snug">{t.name}</span>
