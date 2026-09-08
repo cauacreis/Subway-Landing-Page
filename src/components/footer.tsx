@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Check, Heart, Shield, Sparkles } from "lucide-react";
 
 export default function Footer() {
@@ -24,9 +25,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
           {/* Brand Column */}
           <div className="lg:col-span-4 flex flex-col items-start">
-            <Link href="/" className="flex items-center gap-1 mb-4">
-              <span className="font-black text-3xl text-[#008C15]">SUB</span>
-              <span className="font-black text-3xl text-[#FFC20E]">WAY</span>
+            <Link href="/" className="inline-block mb-5 group">
+              <Image
+                src="/images/icons/subway_logo.png"
+                alt="Subway®"
+                width={130}
+                height={34}
+                className="h-8 w-auto object-contain group-hover:brightness-110 transition-all"
+              />
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed max-w-sm mb-6">
               A maior rede de sanduíches feitos sob medida do planeta, reinventada com ingredientes artesanais, pães assados a cada hora e cortes nobres grelhados.

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, ShoppingBag, Menu, X, MapPin, Sparkles } from "lucide-react";
 
 interface NavbarProps {
@@ -190,14 +191,16 @@ export default function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
           }`}
         >
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative flex items-center tracking-tighter">
-              <span className="font-extrabold text-2xl md:text-3xl text-[#008C15] group-hover:brightness-110 transition-all">
-                SUB
-              </span>
-              <span className="font-extrabold text-2xl md:text-3xl text-[#FFC20E] group-hover:brightness-110 transition-all">
-                WAY
-              </span>
+          <Link href="/" className="flex items-center gap-2 group shrink-0">
+            <div className="relative flex items-center h-8 sm:h-9">
+              <Image
+                src="/images/icons/subway_logo.png"
+                alt="Subway®"
+                width={124}
+                height={32}
+                className="h-7 sm:h-8 w-auto object-contain group-hover:brightness-110 transition-all filter drop-shadow-[0_2px_8px_rgba(0,140,21,0.3)]"
+                priority
+              />
             </div>
           </Link>
 

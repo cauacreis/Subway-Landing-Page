@@ -54,8 +54,14 @@ export default function AppDelivery() {
                 {/* Floating pill over image */}
                 <div className="absolute bottom-5 left-5 right-5 p-3.5 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#FFC20E] to-amber-500 flex items-center justify-center text-slate-950 font-black text-xs shadow-md">
-                      SUB
+                    <div className="w-9 h-9 rounded-xl bg-[#03230c] border border-emerald-500/40 flex items-center justify-center p-1.5 shadow-[0_4px_12px_rgba(0,140,21,0.4)] shrink-0">
+                      <Image
+                        src="/images/icons/subway_symbol.png"
+                        alt="Subway App"
+                        width={24}
+                        height={24}
+                        className="object-contain"
+                      />
                     </div>
                     <div>
                       <span className="text-white font-bold text-xs block">

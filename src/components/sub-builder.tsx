@@ -475,8 +475,16 @@ export default function SubBuilder({
           {/* Top Kiosk Bezel / Status Bar */}
           <div className="px-5 sm:px-8 py-3.5 bg-black/60 border-b border-white/10 flex items-center justify-between backdrop-blur-md">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="w-4 h-4 relative shrink-0">
+                  <Image
+                    src="/images/icons/subway_symbol.png"
+                    alt="Subway S"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <span className="font-extrabold text-xs tracking-wider text-white uppercase">
                   SUBWAY <span className="text-[#FFC20E]">KIOSK™</span>
                 </span>
@@ -1335,8 +1343,14 @@ export default function SubBuilder({
 
                   {/* Subway Mini Logo Badge in center of QR Code */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="px-2 py-0.5 rounded-md bg-[#008C15] border border-white text-white font-black text-[9px] tracking-tight shadow-md">
-                      SUB<span className="text-[#FFC20E]">WAY</span>
+                    <div className="w-10 h-10 rounded-xl bg-white shadow-xl flex items-center justify-center p-1.5 border border-slate-200">
+                      <Image
+                        src="/images/icons/subway_symbol.png"
+                        alt="Subway"
+                        width={28}
+                        height={28}
+                        className="object-contain"
+                      />
                     </div>
                   </div>
                 </div>

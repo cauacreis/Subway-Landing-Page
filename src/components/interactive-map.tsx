@@ -91,10 +91,10 @@ export default function InteractiveMap({
           }
           <div class="relative flex items-center justify-center w-10 h-10 rounded-full shadow-2xl transition-transform duration-300 group-hover:scale-110 ${
             isSelected
-              ? "bg-[#FFC20E] text-slate-950 ring-4 ring-yellow-400/50 scale-110"
-              : "bg-[#008C15] text-white ring-2 ring-white/30"
+              ? "bg-[#0b2413] border-2 border-[#FFC20E] ring-4 ring-yellow-400/50 scale-110"
+              : "bg-[#06180d] border-2 border-emerald-500/50 ring-2 ring-white/20"
           }">
-            <span class="font-black text-[11px] tracking-tight font-mono">SUB</span>
+            <img src="/images/icons/subway_symbol.png" alt="Subway" class="w-6 h-6 object-contain drop-shadow" />
           </div>
           <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black/90 border border-white/10 text-[9px] font-mono text-white whitespace-nowrap shadow-md pointer-events-none">
             ${store.name.replace("Subway® ", "")}

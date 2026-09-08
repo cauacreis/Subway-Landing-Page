@@ -65,8 +65,14 @@ export default function CartDrawer({
         {/* Header */}
         <div className="flex items-center justify-between pb-5 border-b border-white/10">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-emerald-950/80 text-emerald-400 border border-emerald-500/30">
-              <ShoppingBag className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-xl bg-emerald-950/80 border border-emerald-500/30 flex items-center justify-center p-1.5 shrink-0 shadow-sm">
+              <Image
+                src="/images/icons/subway_symbol.png"
+                alt="Subway"
+                width={22}
+                height={22}
+                className="object-contain"
+              />
             </div>
             <div>
               <h3 className="text-lg font-extrabold text-white">Sua Sacola Fresh</h3>
