@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Plus, Check, Flame, Heart, Sparkles, Star } from "lucide-react";
+import { Plus, Check, Flame, Heart, Star } from "lucide-react";
 
 export interface ProductItem {
   id: string;
@@ -116,10 +116,6 @@ export default function ProductShowcase({ onAddToCart }: ProductShowcaseProps) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-500/20 text-[#FFC20E] text-xs font-semibold uppercase tracking-widest mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Receitas Assinadas</span>
-            </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
               A Coleção <span className="text-[#008C15]">Signature</span>
             </h2>
