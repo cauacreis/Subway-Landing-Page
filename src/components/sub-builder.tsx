@@ -89,7 +89,7 @@ const KIOSK_PROTEINS: KioskOption[] = [
     cal: 280,
     protein: 24,
     price: 24.9,
-    badge: "Clássico Supremo",
+    badge: "Clássico",
     category: "protein",
   },
   {
@@ -100,7 +100,6 @@ const KIOSK_PROTEINS: KioskOption[] = [
     cal: 210,
     protein: 26,
     price: 23.9,
-    badge: "Favorito do Chef",
     category: "protein",
   },
   {
@@ -111,7 +110,6 @@ const KIOSK_PROTEINS: KioskOption[] = [
     cal: 290,
     protein: 29,
     price: 28.9,
-    badge: "Corte Nobre",
     category: "protein",
   },
   {
@@ -122,7 +120,6 @@ const KIOSK_PROTEINS: KioskOption[] = [
     cal: 180,
     protein: 14,
     price: 21.9,
-    badge: "100% Plant-Based",
     category: "protein",
   },
 ];
