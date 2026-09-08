@@ -1250,11 +1250,6 @@ export default function SubBuilder({
               <X className="w-5 h-5" />
             </button>
 
-            {/* Header Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/20 text-[#FFC20E] border border-yellow-500/30 text-xs font-bold uppercase tracking-wider mb-3">
-              <Smartphone className="w-3.5 h-3.5" />
-              <span>Integração Totem → App Subway</span>
-            </div>
 
             {/* Modal Title */}
             <h3 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
