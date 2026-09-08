@@ -136,9 +136,17 @@ export default function AppDelivery() {
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <a
                 href="#app-download"
-                className="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center gap-3 transition-all group"
+                className="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center gap-3 transition-all group active:scale-95"
               >
-                <span className="text-xl">🍏</span>
+                <div className="relative w-6 h-6 shrink-0 flex items-center justify-center">
+                  <Image
+                    src="/images/icons/apple-store.png"
+                    alt="App Store"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
                 <div className="text-left">
                   <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-mono">
                     Disponível na
@@ -149,9 +157,17 @@ export default function AppDelivery() {
 
               <a
                 href="#app-download"
-                className="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center gap-3 transition-all group"
+                className="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-white flex items-center gap-3 transition-all group active:scale-95"
               >
-                <span className="text-xl">🤖</span>
+                <div className="relative w-6 h-6 shrink-0 flex items-center justify-center">
+                  <Image
+                    src="/images/icons/google-play.png"
+                    alt="Google Play"
+                    width={24}
+                    height={24}
+                    className="object-contain"
+                  />
+                </div>
                 <div className="text-left">
                   <span className="text-[9px] uppercase tracking-wider text-slate-400 block font-mono">
                     Disponível no

@@ -1,21 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Navigation, Clock, Phone, Search, ChevronRight, Check } from "lucide-react";
+import type { MapStore } from "./interactive-map";
 
-interface Store {
-  id: string;
-  name: string;
-  address: string;
-  district: string;
-  city: string;
-  distance: string;
-  hours: string;
-  hasDriveThru: boolean;
-  phone: string;
-}
+const InteractiveMap = dynamic(() => import("./interactive-map"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full min-h-[420px] rounded-2xl bg-[#09150d] flex flex-col items-center justify-center text-slate-400 gap-3 border border-white/10">
+      <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      <span className="text-xs font-mono text-emerald-400">Carregando mapa interativo Subway®...</span>
+    </div>
+  ),
+});
 
-const SAMPLE_STORES: Store[] = [
+const SAMPLE_STORES: MapStore[] = [
   {
     id: "store-1",
     name: "Subway® Paulista Prime",
@@ -26,6 +26,8 @@ const SAMPLE_STORES: Store[] = [
     hours: "Aberto agora até às 23:30",
     hasDriveThru: false,
     phone: "(11) 3284-9000",
+    lat: -23.5587,
+    lng: -46.6596,
   },
   {
     id: "store-2",
@@ -37,6 +39,8 @@ const SAMPLE_STORES: Store[] = [
     hours: "Aberto 24 horas • Drive-thru ativo",
     hasDriveThru: true,
     phone: "(11) 3031-4500",
+    lat: -23.5794,
+    lng: -46.6908,
   },
   {
     id: "store-3",
@@ -48,12 +52,27 @@ const SAMPLE_STORES: Store[] = [
     hours: "Aberto agora até às 00:00",
     hasDriveThru: false,
     phone: "(11) 3812-7800",
+    lat: -23.5601,
+    lng: -46.6897,
+  },
+  {
+    id: "store-4",
+    name: "Subway® Shopping Eldorado",
+    address: "Av. Rebouças, 3970 - Pinheiros",
+    district: "Pinheiros",
+    city: "São Paulo, SP",
+    distance: "3.4 km",
+    hours: "Aberto agora até às 22:00",
+    hasDriveThru: false,
+    phone: "(11) 3819-2000",
+    lat: -23.5731,
+    lng: -46.6975,
   },
 ];
 
 export default function StoreLocator() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedStore, setSelectedStore] = useState<Store>(SAMPLE_STORES[0]);
+  const [selectedStore, setSelectedStore] = useState<MapStore>(SAMPLE_STORES[0]);
 
   const filteredStores = SAMPLE_STORES.filter(
     (s) =>
@@ -128,66 +147,45 @@ export default function StoreLocator() {
             })}
           </div>
 
-          {/* Interactive Map Visual Mockup */}
+          {/* Interactive Real Map Component */}
           <div className="lg:col-span-7 double-bezel relative">
-            <div className="double-bezel-inner p-6 h-full flex flex-col justify-between min-h-[380px] bg-[#09150d] relative overflow-hidden">
-              {/* Stylized vector map grid background */}
-              <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#05a827_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+            <div className="double-bezel-inner p-2 sm:p-3 h-full flex flex-col justify-between min-h-[460px] bg-[#09150d] relative overflow-hidden rounded-[28px]">
+              {/* Real Map Canvas */}
+              <div className="relative w-full h-full min-h-[460px] rounded-2xl overflow-hidden">
+                <InteractiveMap
+                  stores={filteredStores}
+                  selectedStore={selectedStore}
+                  onSelectStore={setSelectedStore}
+                />
 
-              {/* Map Pins Simulation */}
-              <div className="relative flex-1 flex items-center justify-center">
-                <div className="absolute top-[25%] left-[30%] flex flex-col items-center animate-bounce">
-                  <div className="w-10 h-10 rounded-full bg-[#008C15] border-2 border-white shadow-xl flex items-center justify-center text-white font-black text-xs">
-                    SUB
+                {/* Selected Store Floating Info Panel overlaid on the map */}
+                <div className="absolute bottom-3 left-3 right-3 p-4 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 z-[400] shadow-2xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-[#FFC20E] shrink-0">
+                      <Navigation className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-white font-bold text-sm block">
+                        {selectedStore.name}
+                      </span>
+                      <span className="text-xs text-slate-400 font-mono">
+                        {selectedStore.phone} • A {selectedStore.distance} de você
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-[9px] bg-black/80 px-2 py-0.5 rounded text-white font-mono mt-1">
-                    Paulista
-                  </span>
+
+                  <a
+                    href={`https://maps.google.com/?q=${encodeURIComponent(
+                      selectedStore.name + " " + selectedStore.address + " " + selectedStore.city
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-gradient-to-r from-[#008C15] to-[#046a15] hover:from-[#05a827] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer shrink-0"
+                  >
+                    <span>Traçar Rota no Waze / Maps</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </a>
                 </div>
-
-                <div className="absolute bottom-[35%] right-[25%] flex flex-col items-center">
-                  <div className="w-9 h-9 rounded-full bg-[#FFC20E] border-2 border-slate-900 shadow-xl flex items-center justify-center text-slate-950 font-black text-xs">
-                    SUB
-                  </div>
-                  <span className="text-[9px] bg-black/80 px-2 py-0.5 rounded text-white font-mono mt-1">
-                    Faria Lima
-                  </span>
-                </div>
-
-                <div className="absolute top-[40%] right-[45%] flex flex-col items-center">
-                  <div className="w-8 h-8 rounded-full bg-emerald-700 border-2 border-white/60 shadow-xl flex items-center justify-center text-white font-black text-[10px]">
-                    SUB
-                  </div>
-                </div>
-              </div>
-
-              {/* Selected Store Floating Info Panel */}
-              <div className="p-4 rounded-2xl bg-black/80 backdrop-blur-xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-950 border border-emerald-500/30 flex items-center justify-center text-[#FFC20E]">
-                    <Navigation className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <span className="text-white font-bold text-sm block">
-                      {selectedStore.name}
-                    </span>
-                    <span className="text-xs text-slate-400 font-mono">
-                      {selectedStore.phone} • A {selectedStore.distance} de você
-                    </span>
-                  </div>
-                </div>
-
-                <a
-                  href={`https://maps.google.com/?q=${encodeURIComponent(
-                    selectedStore.name + " " + selectedStore.address
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-gradient-to-r from-[#008C15] to-[#046a15] hover:from-[#05a827] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-md"
-                >
-                  <span>Traçar Rota no Waze / Maps</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </a>
               </div>
             </div>
           </div>
