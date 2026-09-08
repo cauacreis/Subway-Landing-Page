@@ -27,6 +27,16 @@ export const metadata: Metadata = {
     description: "A nova era do sabor artesanal e ingredientes frescos. Monte o seu agora.",
     images: ["/images/hero.jpg"],
   },
+  icons: {
+    icon: [
+      { url: "/icon.png", sizes: "256x256", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
