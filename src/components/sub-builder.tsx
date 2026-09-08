@@ -66,7 +66,6 @@ const KIOSK_BREADS: KioskOption[] = [
     cal: 200,
     protein: 10,
     price: 1.5,
-    badge: "Rico em Fibras",
     category: "bread",
   },
   {
@@ -77,7 +76,6 @@ const KIOSK_BREADS: KioskOption[] = [
     cal: 240,
     protein: 12,
     price: 2.5,
-    badge: "Extra Queijo",
     category: "bread",
   },
 ];
@@ -138,7 +136,6 @@ const KIOSK_CHEESES = [
     cal: 90,
     protein: 5,
     price: 0,
-    badge: "Derretimento Perfeito",
   },
   {
     id: "provolone-artisan",
@@ -235,7 +232,6 @@ const KIOSK_SAUCES = [
     desc: "O molho assinatura icônico Subway, aroma caramelizado e adocicado",
     image: "/images/kiosk/sauce_sweet_onion.jpg",
     cal: 45,
-    badge: "Assinatura",
   },
   {
     id: "chipotle-smoke",
@@ -243,7 +239,6 @@ const KIOSK_SAUCES = [
     desc: "Pimenta chipotle mexicana defumada com emulsão cremosa",
     image: "/images/kiosk/sauce_chipotle.jpg",
     cal: 90,
-    badge: "Picante",
   },
   {
     id: "honey-mustard",
@@ -763,11 +758,6 @@ export default function SubBuilder({
                                 : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10"
                             }`}
                           >
-                            {cheese.badge && (
-                              <span className="absolute top-3 right-3 text-[10px] px-2.5 py-0.5 rounded-full bg-yellow-400 text-slate-950 font-black uppercase">
-                                {cheese.badge}
-                              </span>
-                            )}
                             <div className="flex items-center gap-3">
                               <div className="relative w-18 h-18 rounded-2xl overflow-hidden bg-black/40 border border-white/10 shrink-0 flex items-center justify-center">
                                 {cheese.image ? (
@@ -936,11 +926,6 @@ export default function SubBuilder({
                                 : "bg-white/5 border-white/10 hover:border-white/20 hover:bg-white/10"
                             }`}
                           >
-                            {sauce.badge && (
-                              <span className="absolute top-3 right-3 text-[10px] px-2.5 py-0.5 rounded-full bg-[#FFC20E] text-slate-950 font-black uppercase">
-                                {sauce.badge}
-                              </span>
-                            )}
                             <div className="flex items-center gap-3">
                               <div className="relative w-18 h-18 rounded-2xl overflow-hidden bg-black/40 border border-white/10 shrink-0">
                                 <Image
