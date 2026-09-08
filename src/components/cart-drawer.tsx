@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { X, Trash2, Plus, Minus, ArrowRight, ShoppingBag, Sparkles, Check } from "lucide-react";
 
 export interface CartItem {
@@ -131,8 +132,16 @@ export default function CartDrawer({
             <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-4">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center py-12">
-                  <div className="w-16 h-16 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-3xl mb-4">
-                    🥪
+                  <div className="relative w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 p-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)] group hover:scale-105 transition-transform duration-300">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-b from-[#FFC20E]/10 to-transparent pointer-events-none" />
+                    <Image
+                      src="/images/icons/sandwich_3d.png"
+                      alt="Sanduíche Subway 3D"
+                      width={64}
+                      height={64}
+                      className="object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)]"
+                      priority
+                    />
                   </div>
                   <h4 className="text-white font-bold text-base mb-1">Sua sacola está vazia</h4>
                   <p className="text-xs text-slate-400 max-w-xs">
